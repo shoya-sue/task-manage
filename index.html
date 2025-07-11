@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoリストアプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-title">ToDoリスト</h1>
+        </header>
+
+        <main class="app-main">
+            <form class="task-input-form" id="taskForm">
+                <input 
+                    type="text" 
+                    id="taskInput" 
+                    class="task-input" 
+                    placeholder="新しいタスクを入力してください"
+                    aria-label="新しいタスクを入力"
+                    required
+                >
+                <button type="submit" class="add-button" aria-label="タスクを追加">
+                    追加
+                </button>
+            </form>
+
+            <div class="filter-buttons">
+                <button 
+                    class="filter-button active" 
+                    data-filter="all"
+                    aria-label="全てのタスクを表示"
+                >
+                    全て
+                </button>
+                <button 
+                    class="filter-button" 
+                    data-filter="active"
+                    aria-label="未完了のタスクを表示"
+                >
+                    未完了
+                </button>
+                <button 
+                    class="filter-button" 
+                    data-filter="completed"
+                    aria-label="完了したタスクを表示"
+                >
+                    完了済み
+                </button>
+            </div>
+
+            <ul class="task-list" id="taskList" role="list" aria-label="タスクリスト">
+                <!-- タスクがここに動的に追加されます -->
+            </ul>
+        </main>
+
+        <footer class="app-footer">
+            <div class="task-counter" id="taskCounter" aria-live="polite">
+                0 個のタスクが残っています
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/todo.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
