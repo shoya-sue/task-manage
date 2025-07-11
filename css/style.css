@@ -1,0 +1,336 @@
+:root {
+  --primary-color: #007bff;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  
+  --background-color: #f8f9fa;
+  --surface-color: #ffffff;
+  --text-primary: #343a40;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+  
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+                 'Helvetica Neue', Arial, sans-serif;
+  --font-size-base: 16px;
+  --font-size-sm: 14px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  
+  --line-height-base: 1.5;
+  --line-height-sm: 1.25;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--text-primary);
+  background-color: var(--background-color);
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--surface-color);
+  min-height: 100vh;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.app-header {
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.app-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.task-input-form {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.task-input {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.task-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.add-button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.add-button:hover {
+  background: #0056b3;
+}
+
+.add-button:active {
+  transform: translateY(1px);
+}
+
+.filter-buttons {
+  display: flex;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.filter-button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--font-size-sm);
+}
+
+.filter-button:hover {
+  background: var(--background-color);
+}
+
+.filter-button.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.task-list {
+  background: var(--surface-color);
+  min-height: 300px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.task-item:hover {
+  background: var(--background-color);
+}
+
+.task-item.adding {
+  animation: fadeInUp 0.3s ease;
+}
+
+.task-item.removing {
+  animation: fadeOutRight 0.3s ease;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.task-text {
+  flex: 1;
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  padding: var(--spacing-xs) 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.task-text:hover {
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-text.editing {
+  border: 1px solid var(--primary-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  outline: none;
+  user-select: auto;
+  cursor: text;
+  background: var(--surface-color);
+}
+
+.delete-button {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.delete-button:hover {
+  background: var(--danger-color);
+  color: white;
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.app-footer {
+  background: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.task-counter {
+  font-weight: var(--font-weight-medium);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xxl);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 576px) {
+  .app-container {
+    box-shadow: none;
+  }
+  
+  .task-input-form {
+    flex-direction: column;
+  }
+  
+  .filter-buttons {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  
+  .task-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .app-header {
+    padding: var(--spacing-md);
+  }
+  
+  .app-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (hover: none) {
+  .task-item:hover {
+    background: var(--surface-color);
+  }
+  
+  .delete-button,
+  .add-button,
+  .filter-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .task-text:hover {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
