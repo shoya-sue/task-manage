@@ -1,0 +1,31 @@
+name: Deploy with Base64 Key
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to server
+      env:
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY_BASE64 }}
+      run: |
+        # Base64デコードして秘密鍵ファイルを作成
+        echo "$PRIVATE_KEY" | base64 -d > deploy_key
+        chmod 600 deploy_key
+        
+        # SSHで接続してデプロイ
+        ssh -o StrictHostKeyChecking=no -i deploy_key ${{ secrets.USERNAME }}@${{ secrets.HOST }} -p ${{ secrets.PORT }} << 'EOF'
+          cd /var/www/vhosts/task.sho43.xyz
+          git pull origin main
+        EOF
+        
+        # 秘密鍵を削除
+        rm -f deploy_key
