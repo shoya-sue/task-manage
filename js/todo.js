@@ -1,9 +1,9 @@
 class TodoApp {
     constructor() {
         this.tasks = [];
-        this.currentFilter = 'all';
+        this.currentFilter = Storage.loadFilter();
         this.editingId = null;
-        this.sortByName = false;
+        this.sortByName = Storage.loadSort();
         
         this.taskForm = document.getElementById('taskForm');
         this.taskInput = document.getElementById('taskInput');
@@ -18,6 +18,7 @@ class TodoApp {
     init() {
         this.loadTasks();
         this.bindEvents();
+        this.setFilter(this.currentFilter);
         this.render();
     }
 
@@ -34,8 +35,10 @@ class TodoApp {
         });
 
         if (this.sortCheckbox) {
+            this.sortCheckbox.checked = this.sortByName;
             this.sortCheckbox.addEventListener('change', (e) => {
                 this.sortByName = e.target.checked;
+                Storage.saveSort(this.sortByName);
                 this.render();
             });
         }
@@ -198,6 +201,7 @@ class TodoApp {
 
     setFilter(filter) {
         this.currentFilter = filter;
+        Storage.saveFilter(filter);
         
         this.filterButtons.forEach(button => {
             button.classList.toggle('active', button.dataset.filter === filter);

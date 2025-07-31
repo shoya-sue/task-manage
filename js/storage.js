@@ -1,5 +1,7 @@
 class Storage {
     static STORAGE_KEY = 'todoapp-tasks';
+    static FILTER_KEY = 'todoapp-filter';
+    static SORT_KEY = 'todoapp-sort';
 
     static isAvailable() {
         try {
@@ -69,6 +71,62 @@ class Storage {
             return true;
         } catch (e) {
             console.error('Failed to clear tasks:', e);
+            return false;
+        }
+    }
+
+    static saveFilter(filter) {
+        if (!this.isAvailable()) {
+            return false;
+        }
+
+        try {
+            localStorage.setItem(this.FILTER_KEY, filter);
+            return true;
+        } catch (e) {
+            console.error('Failed to save filter:', e);
+            return false;
+        }
+    }
+
+    static loadFilter() {
+        if (!this.isAvailable()) {
+            return 'all';
+        }
+
+        try {
+            const filter = localStorage.getItem(this.FILTER_KEY);
+            return filter || 'all';
+        } catch (e) {
+            console.error('Failed to load filter:', e);
+            return 'all';
+        }
+    }
+
+    static saveSort(sortByName) {
+        if (!this.isAvailable()) {
+            return false;
+        }
+
+        try {
+            localStorage.setItem(this.SORT_KEY, JSON.stringify(sortByName));
+            return true;
+        } catch (e) {
+            console.error('Failed to save sort:', e);
+            return false;
+        }
+    }
+
+    static loadSort() {
+        if (!this.isAvailable()) {
+            return false;
+        }
+
+        try {
+            const sort = localStorage.getItem(this.SORT_KEY);
+            return sort ? JSON.parse(sort) : false;
+        } catch (e) {
+            console.error('Failed to load sort:', e);
             return false;
         }
     }
