@@ -86,10 +86,6 @@ body::before {
   transition: transform 0.3s ease;
 }
 
-.app-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.15);
-}
 
 .app-header {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
@@ -313,8 +309,8 @@ body::before {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  margin: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin: var(--spacing-xs) var(--spacing-md);
   background: white;
   border-radius: 12px;
   transition: all 0.3s ease;
