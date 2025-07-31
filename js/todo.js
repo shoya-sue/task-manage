@@ -3,12 +3,14 @@ class TodoApp {
         this.tasks = [];
         this.currentFilter = 'all';
         this.editingId = null;
+        this.sortByName = false;
         
         this.taskForm = document.getElementById('taskForm');
         this.taskInput = document.getElementById('taskInput');
         this.taskList = document.getElementById('taskList');
         this.taskCounter = document.getElementById('taskCounter');
         this.filterButtons = document.querySelectorAll('.filter-button');
+        this.sortCheckbox = document.getElementById('sortCheckbox');
         
         this.init();
     }
@@ -30,6 +32,13 @@ class TodoApp {
                 this.setFilter(e.target.dataset.filter);
             });
         });
+
+        if (this.sortCheckbox) {
+            this.sortCheckbox.addEventListener('change', (e) => {
+                this.sortByName = e.target.checked;
+                this.render();
+            });
+        }
 
         this.taskList.addEventListener('click', (e) => {
             const taskItem = e.target.closest('.task-item');
@@ -198,14 +207,23 @@ class TodoApp {
     }
 
     getFilteredTasks() {
+        let filteredTasks;
         switch (this.currentFilter) {
             case 'active':
-                return this.tasks.filter(task => !task.completed);
+                filteredTasks = this.tasks.filter(task => !task.completed);
+                break;
             case 'completed':
-                return this.tasks.filter(task => task.completed);
+                filteredTasks = this.tasks.filter(task => task.completed);
+                break;
             default:
-                return this.tasks;
+                filteredTasks = [...this.tasks];
         }
+        
+        if (this.sortByName) {
+            filteredTasks.sort((a, b) => a.text.localeCompare(b.text, 'ja'));
+        }
+        
+        return filteredTasks;
     }
 
     render() {

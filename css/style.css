@@ -1,18 +1,25 @@
 :root {
-  --primary-color: #007bff;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --warning-color: #ffc107;
-  --info-color: #17a2b8;
+  --primary-color: #667eea;
+  --primary-light: #7c3aed;
+  --primary-dark: #5a67d8;
+  --secondary-color: #48bb78;
+  --accent-color: #ed8936;
+  --success-color: #48bb78;
+  --danger-color: #f56565;
+  --warning-color: #ed8936;
+  --info-color: #4299e1;
   
-  --background-color: #f8f9fa;
+  --background-color: #f7fafc;
   --surface-color: #ffffff;
-  --text-primary: #343a40;
-  --text-secondary: #6c757d;
-  --text-muted: #adb5bd;
+  --surface-hover: #edf2f7;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-muted: #a0aec0;
   
-  --border-color: #dee2e6;
+  --border-color: #e2e8f0;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
                  'Helvetica Neue', Arial, sans-serif;
@@ -47,102 +54,251 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   color: var(--text-primary);
-  background-color: var(--background-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E') repeat;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .app-container {
   max-width: 600px;
-  margin: 0 auto;
-  background: var(--surface-color);
-  min-height: 100vh;
-  box-shadow: 0 4px 6px var(--shadow-color);
+  margin: 2rem auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  min-height: calc(100vh - 4rem);
+  box-shadow: var(--shadow-xl);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.app-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 30px -10px rgba(0, 0, 0, 0.15);
 }
 
 .app-header {
-  background: var(--surface-color);
-  border-bottom: 1px solid var(--border-color);
-  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  border-bottom: none;
+  padding: var(--spacing-xl) var(--spacing-lg);
   text-align: center;
-  box-shadow: 0 2px 4px var(--shadow-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.3; }
 }
 
 .app-title {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
   margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  letter-spacing: -0.5px;
 }
 
 .task-input-form {
   display: flex;
   gap: var(--spacing-sm);
-  padding: var(--spacing-lg);
-  background: var(--surface-color);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  background: linear-gradient(to bottom, rgba(102, 126, 234, 0.1), transparent);
   border-bottom: 1px solid var(--border-color);
+  position: relative;
 }
 
 .task-input {
   flex: 1;
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid transparent;
+  border-radius: 12px;
   font-size: var(--font-size-base);
   outline: none;
-  transition: border-color 0.2s ease;
+  background: var(--surface-hover);
+  transition: all 0.3s ease;
 }
 
 .task-input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1), var(--shadow-lg);
+  transform: scale(1.02);
+}
+
+.task-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 300;
 }
 
 .add-button {
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--primary-color);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
-  font-weight: var(--font-weight-medium);
-  transition: background-color 0.2s ease;
+  font-weight: var(--font-weight-bold);
+  transition: all 0.3s ease;
   white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
 .add-button:hover {
-  background: #0056b3;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.add-button:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 .add-button:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
 }
 
 .filter-buttons {
   display: flex;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--surface-color);
+  background: var(--surface-hover);
   border-bottom: 1px solid var(--border-color);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sort-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-left: auto;
+  padding: 0 var(--spacing-sm);
+}
+
+.sort-toggle label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.sort-checkbox {
+  width: 44px;
+  height: 24px;
+  background: var(--border-color);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+.sort-checkbox::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.sort-checkbox:checked {
+  background: var(--primary-color);
+}
+
+.sort-checkbox:checked::before {
+  transform: translateX(20px);
 }
 
 .filter-button {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   font-size: var(--font-size-sm);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  transition: left 0.3s ease;
+  z-index: -1;
 }
 
 .filter-button:hover {
-  background: var(--background-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
 }
 
 .filter-button.active {
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   color: white;
-  border-color: var(--primary-color);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 .task-list {
@@ -156,29 +312,101 @@ body {
 .task-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 1px solid var(--border-color);
-  transition: all 0.2s ease;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-sm) var(--spacing-md);
+  background: white;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.task-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
 }
 
 .task-item:hover {
-  background: var(--background-color);
+  transform: translateX(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.task-item:hover::before {
+  transform: scaleY(1);
 }
 
 .task-item.adding {
-  animation: fadeInUp 0.3s ease;
+  animation: slideInLeft 0.5s ease;
 }
 
 .task-item.removing {
-  animation: fadeOutRight 0.3s ease;
+  animation: slideOutRight 0.5s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
 }
 
 .task-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
-  accent-color: var(--primary-color);
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.task-checkbox:checked {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  border-color: transparent;
+  animation: checkPop 0.3s ease;
+}
+
+.task-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
 .task-text {
@@ -187,19 +415,38 @@ body {
   color: var(--text-primary);
   cursor: pointer;
   user-select: none;
-  padding: var(--spacing-xs) 0;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .task-text:hover {
-  background: rgba(0, 123, 255, 0.05);
+  background: rgba(102, 126, 234, 0.05);
+  border-color: rgba(102, 126, 234, 0.2);
 }
 
 .task-text.completed {
-  text-decoration: line-through;
   color: var(--text-muted);
+  position: relative;
+}
+
+.task-text.completed::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--text-muted);
+  transform: scaleX(1);
+  animation: strikethrough 0.3s ease;
+}
+
+@keyframes strikethrough {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 .task-text.editing {
@@ -212,48 +459,89 @@ body {
 }
 
 .delete-button {
-  width: 32px;
-  height: 32px;
-  background: transparent;
+  width: 36px;
+  height: 36px;
+  background: rgba(248, 113, 113, 0.1);
   border: none;
-  color: var(--text-secondary);
+  color: var(--danger-color);
   cursor: pointer;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  font-size: 18px;
+  transition: all 0.3s ease;
+  font-size: 20px;
   font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+
+.delete-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--danger-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
 }
 
 .delete-button:hover {
-  background: var(--danger-color);
   color: white;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.delete-button:hover::before {
+  width: 100%;
+  height: 100%;
 }
 
 .delete-button:active {
-  transform: scale(0.95);
+  transform: rotate(90deg) scale(0.95);
 }
 
 .app-footer {
-  background: var(--surface-color);
+  background: linear-gradient(to top, rgba(102, 126, 234, 0.05), transparent);
   border-top: 1px solid var(--border-color);
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-lg);
   text-align: center;
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
 }
 
 .task-counter {
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: var(--font-size-base);
 }
 
 .empty-state {
   text-align: center;
   padding: var(--spacing-xxl);
   color: var(--text-muted);
-  font-style: italic;
+  font-style: normal;
+  font-size: var(--font-size-lg);
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.empty-state::before {
+  content: '📝';
+  display: block;
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 *:focus {
@@ -261,31 +549,24 @@ body {
   outline-offset: 2px;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes fadeOutRight {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
+.task-list {
+  background: transparent;
+  min-height: 300px;
+  list-style: none;
+  padding: var(--spacing-md) 0;
+  margin: 0;
 }
 
 @media (max-width: 576px) {
   .app-container {
-    box-shadow: none;
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
   }
   
   .task-input-form {
